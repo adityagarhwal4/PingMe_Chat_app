@@ -1,12 +1,23 @@
-import { Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Image, KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native'
 import React from 'react'
 import Input from '../components/ui/Input'
 import Button from '../components/ui/Button'
 import Layout from '../components/layout/Layout'
 import { moderateVerticalScale } from 'react-native-size-matters'
 import CustomText from '../components/ui/CustomText'
+import { Controller, useForm } from 'react-hook-form'
 
+type Form = {
+    username: string;
+    password: string;
+}
 const LoginScreen = () => {
+    const { control, handleSubmit } = useForm<Form>();
+
+    const handleLoginClick = (data: Form) => {
+        console.log("Login Clicked", data);
+    }
+
     return (
         <Layout>
             <KeyboardAvoidingView
@@ -27,18 +38,39 @@ const LoginScreen = () => {
                         >
                             Welcome to Ping Me
                         </CustomText>
-                        <Input
-                            style={{ marginTop: moderateVerticalScale(64) }}
-                            placeholder='Username or email address'
+                        <Controller
+                            control={control}
+                            name='username'
+                            rules={{}}
+                            render={({ field }) => (
+                                <Input
+                                    value={field.value}
+                                    onChangeText={field.onChange}
+                                    style={{ marginTop: moderateVerticalScale(64) }}
+                                    placeholder='Username or email address'
+                                    keyboardType='email-address'
+                                />
+                            )}
                         />
-                        <Input
-                            style={{ marginTop: moderateVerticalScale(16) }}
-                            placeholder='Password'
+                        <Controller
+                            control={control}
+                            name='password'
+                            rules={{}}
+                            render={({ field }) => (
+                                <Input
+                                    secureTextEntry
+                                    value={field.value}
+                                    onChangeText={field.onChange}
+                                    style={{ marginTop: moderateVerticalScale(16) }}
+                                    placeholder='Password'
+                                />
+                            )}
                         />
                         <Button
                             style={{ marginTop: moderateVerticalScale(16) }}
                             varient='containedBlue'
                             title='Login'
+                            onPress={handleSubmit(handleLoginClick)}
                         />
                         <Button
                             style={{ marginTop: moderateVerticalScale(16) }}

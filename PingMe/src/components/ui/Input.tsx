@@ -8,7 +8,8 @@ type InputProps = {
     placeholder?: string;
     placeholderTextColor?: string;
     keyboardType?: KeyboardTypeOptions;
-    style?: StyleProp<TextStyle>
+    style?: StyleProp<TextStyle>;
+    secureTextEntry?: boolean;
 };
 
 const Input = (props: InputProps) => {
@@ -20,6 +21,7 @@ const Input = (props: InputProps) => {
             placeholder={props.placeholder}
             placeholderTextColor={props.placeholderTextColor || "666666"}
             keyboardType={props.keyboardType}
+            secureTextEntry={props.secureTextEntry}
         />
     )
 }
